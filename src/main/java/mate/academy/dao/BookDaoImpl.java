@@ -30,7 +30,8 @@ public class BookDaoImpl implements BookDao {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows < 1) {
-                throw new RuntimeException("Expected at least one row to be inserted");
+                throw new DataProcessingException (
+                        "Expected at least one row to be inserted", new RuntimeException());
             }
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -99,7 +100,8 @@ public class BookDaoImpl implements BookDao {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows < 1) {
-                throw new RuntimeException("Expected at least one row to be updated");
+                throw new DataProcessingException(
+                        "Expected at least one row to be updated", new RuntimeException());
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update book", e);
@@ -117,12 +119,16 @@ public class BookDaoImpl implements BookDao {
 
             statement.setLong(1, id);
             statement.executeUpdate();
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows < 1) {
+                throw new DataProcessingException(
+                        "Expected at least one row to be deleted", new RuntimeException());
+            }
+            return true;
         } catch (SQLException e) {
             throw new DataProcessingException(
                     "Can't delete book with id = " + id, e);
         }
-
-        return true;
     }
 
     private Book getBookFromResultSet(ResultSet resultSet) throws SQLException {

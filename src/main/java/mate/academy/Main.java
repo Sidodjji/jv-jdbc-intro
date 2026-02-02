@@ -21,6 +21,6 @@ public class Main {
 
         book2.setPrice(new BigDecimal("400.00"));
         bookDao.update(book2);
-        bookDao.findById(2L);
+        System.out.println(bookDao.findById(2L));
     }
 }
