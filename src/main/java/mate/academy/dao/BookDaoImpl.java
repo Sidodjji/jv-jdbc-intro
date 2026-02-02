@@ -30,7 +30,7 @@ public class BookDaoImpl implements BookDao {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows < 1) {
-                throw new DataProcessingException (
+                throw new DataProcessingException(
                         "Expected at least one row to be inserted", new RuntimeException());
             }
 
