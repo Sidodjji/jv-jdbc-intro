@@ -118,7 +118,8 @@ public class BookDaoImpl implements BookDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete book with id = " + id, e);
+            throw new DataProcessingException(
+                    "Can't delete book with id = " + id, e);
         }
 
         return true;
